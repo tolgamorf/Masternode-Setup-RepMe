@@ -128,7 +128,9 @@ cd ~/helix
 make -j8
 
 # Deploy binaries to /usr/bin
-sudo cp ~/helix/src/helix* /usr/bin/
+sudo cp ~/helix/src/helixd /usr/bin/
+sudo cp ~/helix/src/helix-cli /usr/bin/
+sudo cp ~/helix/src/helix-tx /usr/bin/
 sudo chmod 755 -R ~/Masternode-Setup
 sudo chmod 755 /usr/bin/helix*
 
