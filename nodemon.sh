@@ -4,7 +4,7 @@
 #Processing command line params
 if [ -z $1 ]; then dly=1; else dly=$1; fi   # Default refresh time is 1 sec
 
-datadir="/$USER/.helixcore$2"   # Default datadir is /root/.helixcore
+datadir="/$USER/.helix$2"   # Default datadir is /root/.helix
  
 # Install jq if it's not present
 dpkg -s jq 2>/dev/null >/dev/null || sudo apt-get -y install jq
@@ -29,5 +29,5 @@ echo '==========================================================================
 echo 'Masternode Information: \n# helix-cli getinfo' && helix-cli -datadir=$datadir getinfo
 echo '==========================================================================='
 echo 'Usage: nodemon.sh [refresh delay] [datadir index]'
-echo 'Example: nodemon.sh 10 22 will run every 10 seconds and query helixd in /$USER/.helixcore22'
+echo 'Example: nodemon.sh 10 22 will run every 10 seconds and query helixd in /$USER/.helix22'
 echo '\n\nPress Ctrl-C to Exit...'"
