@@ -73,26 +73,21 @@ else
 fi
 
 # update packages and upgrade Ubuntu
+sudo apt-get -y update
 sudo apt-get -y upgrade
-sudo apt-get -y dist-upgrade
-sudo apt-get -y autoremove
-sudo apt-get -y install wget nano htop jq
-sudo apt-get -y install libzmq3-dev
-sudo apt-get -y install libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev
-sudo apt-get -y install libevent-dev
+sudo apt-get -y git
+sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev git
+sudo apt-get install libboost-all-dev
 
-sudo apt -y install software-properties-common
-sudo add-apt-repository ppa:bitcoin/bitcoin -y
+sudo add-apt-repository ppa:bitcoin/bitcoin
 sudo apt-get -y update
 sudo apt-get -y install libdb4.8-dev libdb4.8++-dev
 
 sudo apt-get -y install libminiupnpc-dev
-
-sudo apt-get -y install fail2ban
-sudo service fail2ban restart
+sudo apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
+sudo apt-get -y install libqrencode-dev
 
 sudo apt-get install ufw -y
-sudo apt-get update -y
 
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
@@ -126,15 +121,15 @@ fi
 
 #Installing Daemon
 cd ~
-#sudo rm Helix-Linux.tar.gz
-#wget https://github.com/ProjectHelixCoin/helix/files/2717275/helix-1.1.0-x86_64-linux-gnu.tar.gz
-#sudo tar -xvf Helix-Linux.tar.gz --strip-components 1 --directory /usr/bin
-#sudo rm Helix-Linux.tar.gz
-
-stop_daemon
+sudo rm -r helix
+git https://github.com/ProjectHelixCoin/helix.git
+cd ~/helix
+./autogen
+./configure
+make -j8
 
 # Deploy binaries to /usr/bin
-sudo cp Masternode-Setup/helix-v1.1.0/helix* /usr/bin/
+sudo cp ~/helix/src/helix* /usr/bin/
 sudo chmod 755 -R ~/Masternode-Setup
 sudo chmod 755 /usr/bin/helix*
 

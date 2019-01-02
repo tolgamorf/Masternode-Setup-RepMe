@@ -54,7 +54,7 @@ the collateral for this masternode is secured in your wallet. Without this step 
 
 Basically all you need to do is just edit the __masternode.conf__ text file located in your hot wallet __data directory__ to enter a few masternode parameters, restart the wallet and then issue a start command for this new masternode.
 
-There are two ways to edit __masternode.conf__. The easiest way is to open the file from within the wallet app (Tools -> Open Masternode Configuration File). Optionally, you can open it from the wallet data folder directly by navigating to the %appdata%/roaming/helixcore. Just hit Win+R, paste %appdata%/roaming/helixcore, hit Enter and then open **masternode.conf** with Notepad for editing. 
+There are two ways to edit __masternode.conf__. The easiest way is to open the file from within the wallet app (Tools -> Open Masternode Configuration File). Optionally, you can open it from the wallet data folder directly by navigating to the %appdata%/roaming/helix. Just hit Win+R, paste %appdata%/roaming/helix, hit Enter and then open **masternode.conf** with Notepad for editing. 
 
 It does not matter which way you open the file or how you edit it. In either case you will need to restart your wallet when you are done in order for it to pickup the changes you made in the file. Make sure to save it before you restart your wallet.
 
@@ -138,7 +138,7 @@ sudo tail -f ~/.helix/debug.log
 
 And for those who wonder what does **helix.conf** file looks like for a typical masternode which the setup script generates, here's an example below...
 
-Note that both, the __externalip__ should match the IP address and __masternodeprivkey__ should math the private key in your  __masternode.conf__ of your hot wallet in order for the masternode to function properly. If any of these two parameters change, they must be changed in both, the helix.conf file on the masternode VPS (located in /root/.helix directory) and masternode.conf on Hot Wallet PC (located in %appdata%/helixcore folder).
+Note that both, the __externalip__ should match the IP address and __masternodeprivkey__ should math the private key in your  __masternode.conf__ of your hot wallet in order for the masternode to function properly. If any of these two parameters change, they must be changed in both, the helix.conf file on the masternode VPS (located in /root/.helix directory) and masternode.conf on Hot Wallet PC (located in %appdata%/helix folder).
 
 Example: 
 
