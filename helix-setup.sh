@@ -76,10 +76,10 @@ fi
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y git
-sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev git
-sudo apt-get install libboost-all-dev
+sudo apt-get -y install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev git
+sudo apt-get -y install libboost-all-dev
 
-sudo add-apt-repository ppa:bitcoin/bitcoin
+sudo add-apt-repository ppa:bitcoin/bitcoin -y
 sudo apt-get -y update
 sudo apt-get -y install libdb4.8-dev libdb4.8++-dev
 
@@ -122,7 +122,7 @@ fi
 #Installing Daemon
 cd ~
 sudo rm -r helix
-git https://github.com/ProjectHelixCoin/helix.git
+git clone https://github.com/ProjectHelixCoin/helix.git
 cd ~/helix
 ./autogen
 ./configure
