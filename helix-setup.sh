@@ -285,9 +285,9 @@ NOTE: To edit helix.conf, first stop the helixd daemon,
 then edit the helix.conf file and save it in nano: (Ctrl-X + Y + Enter),
 then start the helixd daemon back up:
 
-to stop:   ${YELLOW}eden-cli stop${NC}
+to stop:   ${YELLOW}helix-cli stop${NC}
 to edit:   ${YELLOW}nano ~/.helix/helix.conf${NC}
-to start:  ${YELLOW}edend${NC}
+to start:  ${YELLOW}helixd${NC}
 ========================================================================
 To view helixd debug log showing all MN network activity in realtime:
 
