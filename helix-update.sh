@@ -6,7 +6,7 @@ sleep 30
 echo "Updating binaries"
 cd ~/helix
 git pull
-./autogen
+./autogen.sh
 ./configure
 make
 sudo cp -f ~/helix/src/helix* /usr/bin/

@@ -124,7 +124,7 @@ sudo rm -r helix
 git clone https://github.com/ProjectHelixCoin/helix.git
 cd ~/helix
 ./autogen.sh
-./configure.sh
+./configure
 make -j8
 
 # Deploy binaries to /usr/bin
