@@ -73,7 +73,6 @@ else
 fi
 
 # update packages and upgrade Ubuntu
-sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y git
 sudo apt-get -y install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev git
@@ -154,12 +153,12 @@ EOF
     sudo chmod 755 -R ~/.helix/helix.conf
 
     #Starting daemon first time just to generate masternode private key
-    helixd -daemon
+    /usr/bin/helixd -daemon
     delay 30
 
     #Generate masternode private key
     echo -e "${YELLOW}Generating masternode private key...${NC}"
-    genkey=$(helix-cli masternode genkey)
+    genkey=$(/usr/bin/helix-cli masternode genkey)
     if [ -z "$genkey" ]; then
         echo -e "${RED}ERROR:${YELLOW}Can not generate masternode private key.$ \a"
         echo -e "${RED}ERROR:${YELLOW}Reboot VPS and try again or supply existing genkey as a parameter."
@@ -167,7 +166,7 @@ EOF
     fi
     
     #Stopping daemon to create helix.conf
-    stop_daemon
+    /usr/bin/helix-cli stop
     delay 30
 fi
 
@@ -190,7 +189,7 @@ addnode=80.211.196.181:37415
 EOF
 
 #Finally, starting helix daemon with new helix.conf
-helixd
+/usr/bin/helixd
 delay 5
 
 #Setting auto star cron job for helixd
