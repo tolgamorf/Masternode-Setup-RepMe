@@ -189,8 +189,9 @@ maxconnections=64
 externalip=$publicip
 masternode=1
 masternodeprivkey=$genkey
-addnode=seed1.hlix.signal2noi.se:37415
-addnode=seed2.hlix.signal2noi.se:37415
+addnode=173.212.198.12:37415
+addnode=80.211.165.77:37415
+addnode=80.211.196.181:37415
 EOF
 
 #Finally, starting helix daemon with new helix.conf
