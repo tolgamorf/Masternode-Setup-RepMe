@@ -29,7 +29,7 @@ To download (clone) the script and binaries to your VPS, use the following comma
 
 ```bash
 cd ~
-git clone https://github.com/Helix-Foundation/Masternode-Setup
+git clone https://github.com/ProjectHelixCoin/Masternode-Setup.git
 ```
 
 __NOTE:__ in case if you will need to re-download this setup script or binaries from github repo, use the following git command:
@@ -61,18 +61,18 @@ It does not matter which way you open the file or how you edit it. In either cas
 __Here's what you need to do in masternode.conf file__. For each masternode you are going to setup, you need to enter one separate line of text  which will look like this:
 
 ```bash
-mn1 231.321.11.22:13964 27KTCRKgqjBgQbAS2BN9uX8GHBu16wXfr4z4hNDZWQAubqD8fr6 5d46f69f1770cb051baf594d011f8fa5e12b502ff18509492de28adfe2bbd229 0
+mn1 231.321.11.22:37415 27KTCRKgqjBgQbAS2BN9uX8GHBu16wXfr4z4hNDZWQAubqD8fr6 5d46f69f1770cb051baf594d011f8fa5e12b502ff18509492de28adfe2bbd229 0
 ```
 
 The format for this string is as follow:
 ```bash
-masternodealias publicipaddress:13964 masternodeprivatekey output-tx-ID output-tx-index
+masternodealias publicipaddress:37415 masternodeprivatekey output-tx-ID output-tx-index
 ```
 
 Where:
 __masternodealias__ - your human readable masternode name (alias) which you use to identify the masternode. It can be any unique name as long as you can recognize it. It exists only in your wallet and has no impact on the masternode functionality.
 
-__publicipaddress:13964__ - this must be your masternode public IP address, which is usually the IP address of your VPS, accessible from the Internet. The new script (v1.1) will detect your IP address automatically. The __:13964__ suffix is the predefined and fixed TCP port which is being used in helix network for node-to-node and wallet-to-node communications. This port needs to be opened on your VPS server firewall so that others can talk to your masternode. The setup script takes care of it. NOTE: some VPS service providers may have additional firewall on their network which you may need to configure to open TCP port  13971. Vultr does not require this.
+__publicipaddress:37415__ - this must be your masternode public IP address, which is usually the IP address of your VPS, accessible from the Internet. The new script (v1.1) will detect your IP address automatically. The __:37415__ suffix is the predefined and fixed TCP port which is being used in helix network for node-to-node and wallet-to-node communications. This port needs to be opened on your VPS server firewall so that others can talk to your masternode. The setup script takes care of it. NOTE: some VPS service providers may have additional firewall on their network which you may need to configure to open TCP port  13971. Vultr does not require this.
 
 __masternodeprivatekey__ - this is your masternode private key which script will generate automatically. Each masternode will use its own unique private key to maintain secure communication with your Hot Wallet. You will have to generate a new key for each masternode you are setting up. Only your masternode and your hot wallet will be in possession of this private key. In case if you will need to change this key later for some reason, you will have to update it in your __masternode.conf__ in Hot Wallet as well as in the helix.conf in data directory on the masternode VPS.
 
@@ -133,16 +133,16 @@ helix-cli mnsync status
 If you are really bored waiting for the sync to complete, you can watch what your masternode is doing on the network at any time by using tail to **monitor the debug.log** file in realtime:
 
 ```bash
-sudo tail -f ~/.helixcore/debug.log
+sudo tail -f ~/.helix/debug.log
 ```
 
 And for those who wonder what does **helix.conf** file looks like for a typical masternode which the setup script generates, here's an example below...
 
-Note that both, the __externalip__ should match the IP address and __masternodeprivkey__ should math the private key in your  __masternode.conf__ of your hot wallet in order for the masternode to function properly. If any of these two parameters change, they must be changed in both, the helix.conf file on the masternode VPS (located in /root/.helixcore directory) and masternode.conf on Hot Wallet PC (located in %appdata%/helixcore folder).
+Note that both, the __externalip__ should match the IP address and __masternodeprivkey__ should math the private key in your  __masternode.conf__ of your hot wallet in order for the masternode to function properly. If any of these two parameters change, they must be changed in both, the helix.conf file on the masternode VPS (located in /root/.helix directory) and masternode.conf on Hot Wallet PC (located in %appdata%/helixcore folder).
 
 Example: 
 
-**nano /root/.helixcore/helix.conf**
+**nano /root/.helix/helix.conf**
 
 ```bash
 rpcuser=helixrpc
@@ -198,39 +198,39 @@ Currently helix nodes will display most (if not all) peers with IPv6 addresses. 
 Sample output of the script from node 45.76.12.139 on Apr-26th 2018:
 ```
 ===========================================================================
-Outbound connections to other Helix nodes [Helix datadir: /root/.helixcore]
+Outbound connections to other Helix nodes [Helix datadir: /root/.helix]
 ===========================================================================
 Node IP               Ping    Rx/Tx     Since  Hdrs   Height  Time   Ban
 Address               (ms)   (KBytes)   Block  Syncd  Blocks  (min)  Score
 ===========================================================================
-95.171.6.105:13964     118   6818/7929  2586   3706   3706    2361   0
-24.176.52.93:13964     37    5770/6829  2614   3706   3706    2301   0
-38.103.14.19:13964     8     9787/8024  2657   3706   3706    2208   0
-185.109.54.242:13964   134   4765/4824  2796   3706   3706    1908   0
-203.210.232.37:13964   261   4227/4316  2893   3706   3706    1716   0
-103.6.54.182:13964     279   2584/2638  3182   3706   3706    1111   0
-139.99.192.39:13964    209   2569/2595  3185   3706   3706    1100   0
-123.207.49.41:13964    275   2522/2462  3213   3706   3706    1037   0
-159.65.152.125:13964   217   2305/2363  3246   3681   3681    968    0
-141.101.14.64:13964    126   2319/2015  3352   3706   3706    747    0
-192.186.142.122:13964  12    1965/1673  3406   3705   3705    624    0
-144.202.109.173:13964  97    889/728    3572   3706   3706    273    0
-154.127.122.150:13964  295   572/622    3581   3669   3669    260    0
-45.77.42.248:13964     265   147/126    3681   3706   3706    52     0
+95.171.6.105:37415     118   6818/7929  2586   3706   3706    2361   0
+24.176.52.93:37415     37    5770/6829  2614   3706   3706    2301   0
+38.103.14.19:37415     8     9787/8024  2657   3706   3706    2208   0
+185.109.54.242:37415   134   4765/4824  2796   3706   3706    1908   0
+203.210.232.37:37415   261   4227/4316  2893   3706   3706    1716   0
+103.6.54.182:37415     279   2584/2638  3182   3706   3706    1111   0
+139.99.192.39:37415    209   2569/2595  3185   3706   3706    1100   0
+123.207.49.41:37415    275   2522/2462  3213   3706   3706    1037   0
+159.65.152.125:37415   217   2305/2363  3246   3681   3681    968    0
+141.101.14.64:37415    126   2319/2015  3352   3706   3706    747    0
+192.186.142.122:37415  12    1965/1673  3406   3705   3705    624    0
+144.202.109.173:37415  97    889/728    3572   3706   3706    273    0
+154.127.122.150:37415  295   572/622    3581   3669   3669    260    0
+45.77.42.248:37415     265   147/126    3681   3706   3706    52     0
 ===========================================================================
  22:14:21 up 3 days, 22:59,  3 users,  load average: 0.01, 0.03, 0.00
 ===========================================================================
 Masternode Status:
-# helix-cli -datadir=/root/.helixcore masternode status
+# helix-cli -datadir=/root/.helix masternode status
 {
   "vin": "CTxIn(COutPoint(0a5afa9e8c41d003c4399f089bc54880e05ce8a051d30932d236ba12b5d1040b, 0), scriptSig=)",
-  "service": "45.76.12.139:13964",
+  "service": "45.76.12.139:37415",
   "payee": "RXzYZLmj9D6o6XtdK3M3xY2xCfNTSW464m",
   "status": "Masternode successfully started"
 }
 ===========================================================================
 Sync Status:
-# helix-cli -datadir=/root/.helixcore mnsync status
+# helix-cli -datadir=/root/.helix mnsync status
 {
   "AssetID": 999,
   "AssetName": "MASTERNODE_SYNC_FINISHED",
@@ -243,7 +243,7 @@ Sync Status:
 }
 ===========================================================================
 Masternode Information:
-# helix-cli -datadir=/root/.helixcore getinfo
+# helix-cli -datadir=/root/.helix getinfo
 {
   "version": 2000001,
   "protocolversion": 70206,
@@ -264,7 +264,7 @@ Masternode Information:
 }
 ===========================================================================
 Usage: nodemon.sh [refresh delay] [datadir index]
-Example: nodemon.sh 10 22 will run every 10 seconds and query helixd in /root/.helixcore22
+Example: nodemon.sh 10 22 will run every 10 seconds and query helixd in /root/.helix22
 
 
 Press Ctrl-C to Exit...
