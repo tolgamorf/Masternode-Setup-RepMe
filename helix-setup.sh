@@ -310,7 +310,4 @@ Enjoy your Helix Masternode and thanks for using this setup script!
 
 
 "
-# Run nodemon.sh
-~/Masternode-Setup-Helix/nodemon.sh
-
 # EOF
