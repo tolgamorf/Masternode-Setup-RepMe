@@ -131,11 +131,11 @@ make
 sudo cp ~/helix/src/helixd /usr/bin/
 sudo cp ~/helix/src/helix-cli /usr/bin/
 sudo cp ~/helix/src/helix-tx /usr/bin/
-sudo chmod 755 -R ~/Masternode-Setup
+sudo chmod 755 -R ~/Masternode-Setup-Helix
 sudo chmod 755 /usr/bin/helix*
 
 # Deploy masternode monitoring script
-cp ~/Masternode-Setup/nodemon.sh /usr/local/bin
+cp ~/Masternode-Setup-Helix/nodemon.sh /usr/local/bin
 sudo chmod 711 /usr/local/bin/nodemon.sh
 
 #Create helix datadir
