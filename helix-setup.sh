@@ -74,17 +74,17 @@ fi
 
 # update packages and upgrade Ubuntu
 sudo apt-get -y upgrade
-sudo apt-get -y git
-sudo apt-get -y install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev git
-sudo apt-get -y install libboost-all-dev
+#sudo apt-get -y git
+#sudo apt-get -y install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev git
+#sudo apt-get -y install libboost-all-dev
 
-sudo add-apt-repository ppa:bitcoin/bitcoin -y
-sudo apt-get -y update
-sudo apt-get -y install libdb4.8-dev libdb4.8++-dev
+#sudo add-apt-repository ppa:bitcoin/bitcoin -y
+#sudo apt-get -y update
+#sudo apt-get -y install libdb4.8-dev libdb4.8++-dev
 
-sudo apt-get -y install libminiupnpc-dev
-sudo apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
-sudo apt-get -y install libqrencode-dev
+#sudo apt-get -y install libminiupnpc-dev
+#sudo apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
+#sudo apt-get -y install libqrencode-dev
 
 sudo apt-get install ufw -y
 
@@ -119,18 +119,18 @@ else
 fi
 
 #Installing Daemon
-cd ~
-sudo rm -r helix
-git clone https://github.com/ProjectHelixCoin/helix.git
-cd ~/helix
-./autogen.sh
-./configure
-make
+#cd ~
+#sudo rm -r helix
+#git clone https://github.com/ProjectHelixCoin/helix.git
+#cd ~/helix
+#./autogen.sh
+#./configure
+#make
 
 # Deploy binaries to /usr/bin
-sudo cp ~/helix/src/helixd /usr/bin/
-sudo cp ~/helix/src/helix-cli /usr/bin/
-sudo cp ~/helix/src/helix-tx /usr/bin/
+sudo cp ~/Masternode-Setup-Helix/Helix/helixd /usr/bin/
+sudo cp ~/Masternode-Setup-Helix/Helix/helix-cli /usr/bin/
+sudo cp ~/Masternode-Setup-Helix/Helix/helix-tx /usr/bin/
 sudo chmod 755 -R ~/Masternode-Setup-Helix
 sudo chmod 755 /usr/bin/helix*
 
