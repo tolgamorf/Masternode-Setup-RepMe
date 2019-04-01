@@ -1,17 +1,17 @@
 #!/bin/bash
-# helix Masternode Setup Script V1.3 for Ubuntu 16.04 LTS
+# repme Masternode Setup Script V1.3 for Ubuntu 16.04 LTS
 #
 # Script will attempt to autodetect primary public IP address
 # and generate masternode private key unless specified in command line
 #
 # Usage:
-# bash helix-setup.sh [Masternode_Private_Key]
+# bash repme-setup.sh [Masternode_Private_Key]
 #
 # Example 1: Existing genkey created earlier is supplied
-# bash helix-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
+# bash repme-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
 #
 # Example 2: Script will generate a new genkey automatically
-# bash helix-setup.sh
+# bash repme-setup.sh
 #
 
 #Color codes
@@ -20,8 +20,8 @@ GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-#helix TCP port
-PORT=37415
+#repme TCP port
+PORT=2319
 
 #Clear keyboard input buffer
 function clear_stdin { while read -r -t 0; do read -r; done; }
@@ -31,17 +31,17 @@ function delay { echo -e "${GREEN}Sleep for $1 seconds...${NC}"; sleep "$1"; }
 
 #Stop daemon if it's already running
 function stop_daemon {
-    if pgrep -x 'helixd' > /dev/null; then
-        echo -e "${YELLOW}Attempting to stop helixd${NC}"
-        helix-cli stop
+    if pgrep -x 'repmed' > /dev/null; then
+        echo -e "${YELLOW}Attempting to stop repmed${NC}"
+        repme-cli stop
         delay 30
-        if pgrep -x 'helixd' > /dev/null; then
-            echo -e "${RED}helixd daemon is still running!${NC} \a"
+        if pgrep -x 'repmed' > /dev/null; then
+            echo -e "${RED}repmed daemon is still running!${NC} \a"
             echo -e "${YELLOW}Attempting to kill...${NC}"
-            pkill helixd
+            pkill repmed
             delay 30
-            if pgrep -x 'helixd' > /dev/null; then
-                echo -e "${RED}Can't stop helixd! Reboot and try again...${NC} \a"
+            if pgrep -x 'repmed' > /dev/null; then
+                echo -e "${RED}Can't stop repmed! Reboot and try again...${NC} \a"
                 exit 2
             fi
         fi
@@ -52,7 +52,7 @@ function stop_daemon {
 genkey=$1
 
 clear
-echo -e "${YELLOW}Helix Masternode Setup Script V1.2 for Ubuntu 16.04 LTS${NC}"
+echo -e "${YELLOW}RepMe Masternode Setup Script V1.2 for Ubuntu 16.04 LTS${NC}"
 echo -e "${GREEN}Updating system and installing required packages...${NC}"
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
 
@@ -96,7 +96,7 @@ echo -e "${YELLOW}"
 sudo ufw --force enable
 echo -e "${NC}"
 
-#Generating Random Password for helixd JSON RPC
+#Generating Random Password for repmed JSON RPC
 rpcpassword=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 #Create 2GB swap file
@@ -120,61 +120,61 @@ fi
 
 #Installing Daemon
 #cd ~
-#sudo rm -r helix
-#git clone https://github.com/ProjectHelixCoin/helix.git
-#cd ~/helix
+#sudo rm -r repme
+#git clone https://github.com/ProjectRepMeCoin/repme.git
+#cd ~/repme
 #./autogen.sh
 #./configure
 #make
 
 # Deploy binaries to /usr/bin
-sudo cp ~/Masternode-Setup-Helix/Helix/helixd /usr/bin/
-sudo cp ~/Masternode-Setup-Helix/Helix/helix-cli /usr/bin/
-sudo cp ~/Masternode-Setup-Helix/Helix/helix-tx /usr/bin/
-sudo chmod 755 -R ~/Masternode-Setup-Helix
-sudo chmod 755 /usr/bin/helix*
+sudo cp ~/Masternode-Setup-RepMe/RepMe/repmed /usr/bin/
+sudo cp ~/Masternode-Setup-RepMe/RepMe/repme-cli /usr/bin/
+sudo cp ~/Masternode-Setup-RepMe/RepMe/repme-tx /usr/bin/
+sudo chmod 755 -R ~/Masternode-Setup-RepMe
+sudo chmod 755 /usr/bin/repme*
 
 # Deploy masternode monitoring script
-cp ~/Masternode-Setup-Helix/nodemon.sh /usr/local/bin
+cp ~/Masternode-Setup-RepMe/nodemon.sh /usr/local/bin
 sudo chmod 711 /usr/local/bin/nodemon.sh
 
-#Create helix datadir
-if [ ! -f ~/.helix/helix.conf ]; then 
-	sudo mkdir ~/.helix
+#Create repme datadir
+if [ ! -f ~/.repme/repme.conf ]; then 
+	sudo mkdir ~/.repme
 fi
 
-echo -e "${YELLOW}Creating helix.conf...${NC}"
+echo -e "${YELLOW}Creating repme.conf...${NC}"
 
 # If genkey was not supplied in command line, we will generate private key on the fly
 if [ -z $genkey ]; then
-    cat <<EOF > ~/.helix/helix.conf
-rpcuser=helixrpc
+    cat <<EOF > ~/.repme/repme.conf
+rpcuser=repmerpc
 rpcpassword=$rpcpassword
 EOF
 
-    sudo chmod 755 -R ~/.helix/helix.conf
+    sudo chmod 755 -R ~/.repme/repme.conf
 
     #Starting daemon first time just to generate masternode private key
-    /usr/bin/helixd -daemon
+    /usr/bin/repmed -daemon
     delay 30
 
     #Generate masternode private key
     echo -e "${YELLOW}Generating masternode private key...${NC}"
-    genkey=$(/usr/bin/helix-cli masternode genkey)
+    genkey=$(/usr/bin/repme-cli masternode genkey)
     if [ -z "$genkey" ]; then
         echo -e "${RED}ERROR:${YELLOW}Can not generate masternode private key.$ \a"
         echo -e "${RED}ERROR:${YELLOW}Reboot VPS and try again or supply existing genkey as a parameter."
         exit 1
     fi
     
-    #Stopping daemon to create helix.conf
-    /usr/bin/helix-cli stop
+    #Stopping daemon to create repme.conf
+    /usr/bin/repme-cli stop
     delay 30
 fi
 
-# Create helix.conf
-cat <<EOF > ~/.helix/helix.conf
-rpcuser=helixrpc
+# Create repme.conf
+cat <<EOF > ~/.repme/repme.conf
+rpcuser=repmerpc
 rpcpassword=$rpcpassword
 rpcallowip=127.0.0.1
 onlynet=ipv4
@@ -185,17 +185,17 @@ maxconnections=64
 externalip=$publicip
 masternode=1
 masternodeprivkey=$genkey
-addnode=173.212.198.12:37415
-addnode=80.211.165.77:37415
-addnode=80.211.196.181:37415
+addnode=173.212.198.12:2319
+addnode=80.211.165.77:2319
+addnode=80.211.196.181:2319
 EOF
 
-#Finally, starting helix daemon with new helix.conf
-/usr/bin/helixd
+#Finally, starting repme daemon with new repme.conf
+/usr/bin/repmed
 delay 5
 
-#Setting auto star cron job for helixd
-cronjob="@reboot sleep 30 && helixd"
+#Setting auto star cron job for repmed
+cronjob="@reboot sleep 30 && repmed"
 crontab -l > tempcron
 if ! grep -q "$cronjob" tempcron; then
     echo -e "${GREEN}Configuring crontab job...${NC}"
@@ -213,7 +213,7 @@ Masternode was installed with VPS IP Address: ${YELLOW}$publicip${NC}
 Masternode Private Key: ${YELLOW}$genkey${NC}
 
 Now you can add the following string to the masternode.conf file
-for your Hot Wallet (the wallet with your helix collateral funds):
+for your Hot Wallet (the wallet with your repme collateral funds):
 ======================================================================== \a"
 echo -e "${YELLOW}mn1 $publicip:$PORT $genkey TxId TxIdx${NC}"
 echo -e "========================================================================
@@ -226,7 +226,7 @@ into your ${YELLOW}masternode.conf${NC} file and replace:
     ${YELLOW}TxIdx${NC} - with Transaction Index (0 or 1)
      Remember to save the masternode.conf and restart the wallet!
 
-To introduce your new masternode to the helix network, you need to
+To introduce your new masternode to the repme network, you need to
 issue a masternode start command from your wallet, which proves that
 the collateral for this node is secured."
 
@@ -256,7 +256,7 @@ Masternode Status to change to: 'Masternode successfully started'.
 This will indicate that your masternode is fully functional and
 you can celebrate this achievement!
 
-Currently your masternode is syncing with the helix network...
+Currently your masternode is syncing with the repme network...
 
 The following screen will display in real-time
 the list of peer connections, the status of your masternode,
@@ -272,26 +272,26 @@ ${GREEN}...scroll up to see previous screens...${NC}
 Here are some useful commands and tools for masternode troubleshooting:
 
 ========================================================================
-To view masternode configuration produced by this script in helix.conf:
+To view masternode configuration produced by this script in repme.conf:
 
-${YELLOW}cat ~/.helix/helix.conf${NC}
+${YELLOW}cat ~/.repme/repme.conf${NC}
 
-Here is your helix.conf generated by this script:
+Here is your repme.conf generated by this script:
 -------------------------------------------------${YELLOW}"
-cat ~/.helix/helix.conf
+cat ~/.repme/repme.conf
 echo -e "${NC}-------------------------------------------------
 
-NOTE: To edit helix.conf, first stop the helixd daemon,
-then edit the helix.conf file and save it in nano: (Ctrl-X + Y + Enter),
-then start the helixd daemon back up:
+NOTE: To edit repme.conf, first stop the repmed daemon,
+then edit the repme.conf file and save it in nano: (Ctrl-X + Y + Enter),
+then start the repmed daemon back up:
 
-to stop:   ${YELLOW}helix-cli stop${NC}
-to edit:   ${YELLOW}nano ~/.helix/helix.conf${NC}
-to start:  ${YELLOW}helixd${NC}
+to stop:   ${YELLOW}repme-cli stop${NC}
+to edit:   ${YELLOW}nano ~/.repme/repme.conf${NC}
+to start:  ${YELLOW}repmed${NC}
 ========================================================================
-To view helixd debug log showing all MN network activity in realtime:
+To view repmed debug log showing all MN network activity in realtime:
 
-${YELLOW}tail -f ~/.helix/debug.log${NC}
+${YELLOW}tail -f ~/.repme/debug.log${NC}
 ========================================================================
 To monitor system resource utilization and running processes:
 
@@ -306,7 +306,7 @@ or just type 'node' and hit <TAB> to autocomplete script name.
 ========================================================================
 
 
-Enjoy your Helix Masternode and thanks for using this setup script!
+Enjoy your RepMe Masternode and thanks for using this setup script!
 
 
 "
